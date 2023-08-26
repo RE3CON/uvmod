@@ -1,30 +1,26 @@
-modClasses = [
+modClasses = [//am getting crazy again this not working patch to add 2 test
+        
 // Mod_Tone_ToneBurst by @RE3CON.github.com CallSign: RE-3CON (Mil. Research Dev.) converted/rewritten to java from python mod by IK8JHL mod_change_Tone_1750Hz.py !!! DO Pay propper credits !!!        
-/*class Mod_ChangeToneBrust extends FirmwareMod { // NO thanks spm81 for stealing and sharing my codes and sharing as it was yours to whosmatt under your name credits instead of mime R3C0N but it doesnt work, Im not finished writing parts of this code!!! 
+class Mod_ChangeToneBurst extends FirmwareMod {
         constructor() {
-            super("Repeater Tone Burst (Experimental ONLY)", "Push Button F2 [Flashlight] + PTT at the same time together, sends a 1750Hz wakeup tone by default for repeater in the EU. To demute NOAA Channels requires a 1050 Hz Tone. Other not so common repeater tone pulse freq are 1000Hz, 1450Hz, 1750Hz, 2100Hz", 0);
-            this.inputTone = addInputField(this.modSpecificDiv, "Enter a new Tone Burst frequency (Hz)", "1050");
-               //this.contrastValue = addInputField(this.modSpecificDiv, "Enter a new Tone Burst Hz value from 1000-3950:", "1750");
+            super("1750Hz Tone Burst (again testing this prev code...)", "The 1750Hz button sends a 1750Hz activation tone by default. To open NOAA channels (in combination with the NOAA frequencies mod on the receiving unit), you can use this mod to send a 1050Hz tone. Common repeater tone pulse frequencies are 1000Hz, 1450Hz, 1750Hz, 2100Hz", 0);
+            this.toneValue = addInputField(this.modSpecificDiv, "Enter a new Tone Burst value in Hz from 1000-3950:", "1750");
         }
 
         apply(firmwareData) {
-            const offset = 0x29cc;    
-          //  const minValue = 1000;
-          //  const maxValue = 3950;
-              const tone = parseInt(this.contrastValue.value);
-          //  const tone = Math.trunc(parseInt(this.inputTone.value) * 10.32444);
-//must be redone, rewritten with math instr. write from offset 0x29cc to 0x29cd !
-            //if (!isNaN(inputValue) && inputValue >= minValue && inputValue <= maxValue) {
-                if (tone <= 0xFFFF) {
-                // Create an 8-byte buffer with the specified values
-                const buffer = new ArrayBuffer(8);
-                const dataView = new DataView(buffer);
-                dataView.setUint32(0, tone, true);
-                const toneHex = new Uint8Array(buffer);
-                firmwareData = replaceSection(firmwareData, toneHex, offset);
-                //const newData = new Uint8Array([inputValue]);
-                //firmwareData = replaceSection(firmwareData, newData, offset);//should replace from 0x29cc-0x29cd, maybe +4
-                log(`Success: ${this.name} applied. See result in a Hex or Diff viewer but unpack it to compaire`);
+            const minValue = 1000;
+            const maxValue = 3950;
+            const inputValue = parseInt(this.toneValue.value);
+
+            if (!isNaN(inputValue) && inputValue >= minValue && inputValue <= maxValue) {
+                const newData = new Uint8Array(8); //must replace 29cc-29cd
+                const dataView = new DataView(newData.buffer);
+                dataView.setUint32(0, inputValue, true);
+
+                console.log(uint8ArrayToHexString(newData)); // value is correct
+
+                firmwareData = replaceSection(firmwareData, newData, 0x29cc); // does not seem to work 29cc-29cd
+                log(`Success: ${this.name} applied.`);
             }
             else {
                 log(`ERROR in ${this.name}: Repeater Tone Burst must be a Tone Freq. in Hz from 1000-3950 Hz!`);
@@ -36,7 +32,7 @@ modClasses = [
 
         ///  HERE COMES THE RIGHT DEAL JUST IN TIME BY RE3CON CODED
 // Mod_Tone_ToneBurst by RE3CON converted/rewritten to java from python mod by IK8JHL mod_change_Tone_1750Hz.py !!! DO Pay propper credits !!!      
-class Mod_ToneBurst extends FirmwareMod {
+class ModToneBurst extends FirmwareMod {
         constructor() {
             super("Repeater Tone Burst (by RE3CON)", "Changes the Tone by PTT and Side F2 Key, used to open HAM Repeaters and NOAA Channels. The default is 1750 Hz. To open NOAA Ton-Squelch set 1050 Hz. Other not so common repeater tone pulse freq are 1000Hz, 1450Hz, 1750Hz, 2100Hz", 0);
             this.inputTone = addInputField(this.modSpecificDiv, "Enter a new Tone Burst frequency (Hz)", "1050");
