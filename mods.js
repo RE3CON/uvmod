@@ -13,7 +13,7 @@ class Mod_ChangeToneBurst extends FirmwareMod {
             const inputValue = parseInt(this.toneValue.value);
 
             if (!isNaN(inputValue) && inputValue >= minValue && inputValue <= maxValue) {
-                const newData = new Uint8Array(8); //must replace 29cc-29cd
+                const newData = new Uint8Array(4); //must replace 29cc-29cd
                 const dataView = new DataView(newData.buffer);
                 dataView.setUint32(0, inputValue, true);
 
