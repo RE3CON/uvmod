@@ -8,6 +8,9 @@ class Mod_ChangeToneBurst extends FirmwareMod {
         }
 
         apply(firmwareData) {
+            const offset = 0x29cc;
+            const oldData = hexString("d606"); 
+                //if fw[0x29cc] == 0xd6 and fw[0x29cd] == 0x06
             const minValue = 1000;
             const maxValue = 3950;
             const inputValue = parseInt(this.toneValue.value);
