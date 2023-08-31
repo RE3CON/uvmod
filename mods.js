@@ -28,7 +28,7 @@ class Mod_ChangeToneBurst extends FirmwareMod {
             return firmwareData;
         }
     }
-    ,*/
+    ,
 
         ///  HERE COMES THE RIGHT DEAL JUST IN TIME BY RE3CON CODED
 // Mod_Tone_ToneBurst by RE3CON converted/rewritten to java from python mod by IK8JHL mod_change_Tone_1750Hz.py !!! DO Pay propper credits !!!      
