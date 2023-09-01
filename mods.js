@@ -1005,7 +1005,7 @@ class Mod_FontLetters extends FirmwareMod {
           //  this.selectGraph = addRadioButton(this.modSpecificDiv, "Select RSSI Graph, uses 1424 Bytes of additional Flash CURRENTLY BROKEN", "selectGraph", "selectRSSI");
           //  this.selectSbar.checked = true;
             //this.selectGraph.disabled = true; // currently broken, doesnt boot and python variant of the mod doesnt seem to do anything
-        //}
+        }
         apply(firmwareData) {
             firmwareData = replaceSection(firmwareData, hexString("e7e50000"), 0x0004); // replace reset handler
             firmwareData = replaceSection(firmwareData, hexString("1de70000"), 0x003c); // replace systick handler
