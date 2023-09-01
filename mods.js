@@ -33,7 +33,7 @@ modClasses = [
     ,  //add 500k steps @0xe0d2: 0xC4 0x09 changed to 0x50 0xC3  
    class Mod_add500Ksteps extends FirmwareMod {
         constructor() {
-            super("Add 500kHz Steps (Experimental)", "Switch the freq in 0,5 MHz Steps. Usefull >999MHz to reach above the GHz range quickly", 0);//Diffs by RE3CON, taken from Tunas1337
+            super("Add 500kHz Steps (Experimental ONLY)", "Switch the freq in 0,5 MHz Steps. Usefull >999MHz to reach above the GHz range quickly", 0);//Diffs by RE3CON, taken from Tunas1337
         }
         apply(firmwareData) {
             const offset = 0xe0d2;
@@ -52,7 +52,7 @@ modClasses = [
     ,//just a quick edit... EOT credits by RE3CON
   class Mod_CustomTXRange extends FirmwareMod {
         constructor() {
-            super("Custom TX Freq Range (allow/lock)", "You can either block a range of frequencies or allow a specific freq range from 18-1300 MHz. It can be used to do the same as 'Enable TX everywhere except Air Band', or it could also be used to make the radio only TX on PMR466. The preset values below are set to block Air Band and allow everything else.", 0);
+            super("Custom TX Freq Range (allow/blocked)", "You can either block a range of frequencies or allow a specific freq range from 18-1300 MHz. It can be used to do the same as 'Enable TX everywhere except Air Band', or it could also be used to make the radio only TX on PMR466. The preset values below are set to block Air Band and allow everything else.", 0);
             this.selectBlock = addRadioButton(this.modSpecificDiv, "The frequency range below will be blocked, everything else will be allowed. ", "selectBlock", "selectTXRange");
             this.selectAllow = addRadioButton(this.modSpecificDiv, "The frequency range below will be allowed, everything else will be blocked. ", "selectAllow", "selectTXRange");
             this.selectBlock.checked = true;
@@ -157,7 +157,7 @@ modClasses = [
     ,   */  
     class Mod_DisableTXlock extends FirmwareMod {
         constructor() {
-            super("Disable TX Lock from 50-600 MHz", "Enables transmitting on frequencies from 50 MHz to 600 MHz. The harmonic wave radiation can be stronger than on the input frequency and cause severe interference!", 0);
+            super("Disable TX Locked Freq from 50-600 MHz", "Enables transmitting on frequencies from 50 MHz to 600 MHz. The harmonic wave radiation can be stronger than on the input frequency and cause severe interference!", 0);
         }
 
         apply(firmwareData) {
@@ -390,7 +390,7 @@ modClasses = [
 // Mod_Tone_ToneBurst by @RE3CON.github.com CallSign: RE-3CON (Mil. Research Dev.) converted/rewritten to java from python mod by IK8JHL mod_change_Tone_1750Hz.py !!! DO Pay propper credits !!!        
 class Mod_ChangeToneBurst extends FirmwareMod {
         constructor() {
-            super("1750Hz Tone Burst (again testing this prev code...)", "The 1750Hz button sends a 1750Hz activation tone by default. To open NOAA channels (in combination with the NOAA frequencies mod on the receiving unit), you can use this mod to send a 1050Hz tone. Common repeater tone pulse frequencies are 1000Hz, 1450Hz, 1750Hz, 2100Hz", 0);
+            super("1750Hz Tone Burst (again testing this code...)", "The 1750Hz button sends a 1750Hz activation tone by default. To open NOAA channels (in combination with the NOAA frequencies mod on the receiving unit), you can use this mod to send a 1050Hz tone. Common repeater tone pulse frequencies are 1000Hz, 1450Hz, 1750Hz, 2100Hz", 0);
             this.toneValue = addInputField(this.modSpecificDiv, "Enter a new Tone Burst value in Hz from 1000-3950:", "1750");
         }
         apply(firmwareData) {
@@ -400,12 +400,12 @@ class Mod_ChangeToneBurst extends FirmwareMod {
             const minValue = 1000;
             const maxValue = 3950;
             const inputValue = parseInt(this.toneValue.value);
-            if (!isNaN(inputValue) && inputValue >= minValue && inputValue <= maxValue) {
+            if (!isNaN(inputValue) && inputValue >= minValue && inputValue <= maxValue) {// does not seem to work 29cc-29cd using <= 0 x ff ff ff ff mihht be better
                 const newData = new Uint8Array(8); //must replace 29cc-29cd
                 const dataView = new DataView(newData.buffer);
                 dataView.setUint32(0, inputValue, true);
                 console.log(uint8ArrayToHexString(newData)); // value is correct
-                firmwareData = replaceSection(firmwareData, newData, 0x29cc); // does not seem to work 29cc-29cd
+                firmwareData = replaceSection(firmwareData, newData, 0x29cc); 
                 log(`Success: ${this.name} applied.`);
             }
             else {
@@ -515,7 +515,7 @@ class Mod_ChangeToneBurst extends FirmwareMod {
     ,
     class Mod_EnableSWDPort extends FirmwareMod {
         constructor() {
-            super("Enable SWD Port", "Allows via (SWD) Serial Wire Debug. Requires to solder 2-pin wire on the radios mainboard. Alternative to JTAG using the same protocol. ", 0);
+            super("Enable SWD Port", "Allows via (SWD) Serial Wire Debugging. Requires to solder 2-pin wire on the radios mainboard. Alternative to JTAG using the same protocol. ", 0);
         }
         apply(firmwareData) {
             const offset1 = 0xb924;
@@ -537,7 +537,7 @@ class Mod_ChangeToneBurst extends FirmwareMod {
     ,
     class Mod_FrequencyRangeAdvanced extends FirmwareMod {
         constructor() {
-            super("Custom Frequency Ranges", "Changes the frequency range limits.", 0);
+            super("Custom Band 1-7 Frequency Ranges", "Changes the frequency range limits.", 0);
             this.selectSimple = addRadioButton(this.modSpecificDiv, "Simple Mode: Extend Band 1 down to 18 MHz and Band 7 up to 1300 MHz. This is the maximum frequency range of the chip. ", "selectSimpleMode", "selectFrequencyRange");
             this.selectCustom = addRadioButton(this.modSpecificDiv, "Custom Mode: Manually edit the frequency ranges. ", "selectCustomMode", "selectFrequencyRange");
             this.selectSimple.checked = true;
@@ -749,7 +749,7 @@ class Mod_NOAAFrequencies extends FirmwareMod {
     ,  
     class Mod_FontSmallDigits extends FirmwareMod {
         constructor() {
-            super("Modified font (small numbers)", "Changes the font to one of the selected ones: ", 0);
+            super("Modified Font (small numbers)", "Changes the font to one of the selected ones: ", 0);
             this.selectFuturistic = addRadioButton(this.modSpecificDiv, "Futuristic font (by DO7OO)", "selectFuturisticSmallDigits", "selectFontSmallDigits");
             this.selectTerminus = addRadioButton(this.modSpecificDiv, "Terminus font by @mbg", "selectTerminusSmallDigits", "selectFontSmallDigits");
             this.selectTerminus.checked = true;
@@ -771,7 +771,7 @@ class Mod_NOAAFrequencies extends FirmwareMod {
     ,
 class Mod_FontLetters extends FirmwareMod {
         constructor() {
-            super("Modified font (letters)", "Changes the font to one of the selected ones: ", 0);
+            super("Modified Font (letters)", "Changes the font to one of the selected ones: ", 0);
             this.selectTunas1337 = addRadioButton(this.modSpecificDiv, "Font by Tunas1337", "selectTunas1337Letters", "selectFontLetters");
             this.selectTerminus = addRadioButton(this.modSpecificDiv, "Terminus font by @mbg", "selectTerminusLetters", "selectFontLetters");
             this.selectTerminus.checked = true;
@@ -793,7 +793,7 @@ class Mod_FontLetters extends FirmwareMod {
     ,         
     class Mod_BacklightDuration extends FirmwareMod {
         constructor() {
-            super("Backlight Duration", "Sets a multiplier for the backlight duration.", 0);
+            super("Backlight Duration", "Sets a multiplier for the backlight duration time out.", 0);
             this.select1 = addRadioButton(this.modSpecificDiv, "1x - up to 5s backlight (default value)", "select1", "selectBacklightDuration");
             this.select2 = addRadioButton(this.modSpecificDiv, "2x - up to 10s backlight", "select2", "selectBacklightDuration");
             this.select4 = addRadioButton(this.modSpecificDiv, "4x - up to 20s backlight", "select4", "selectBacklightDuration");
@@ -1012,16 +1012,9 @@ class Mod_FontLetters extends FirmwareMod {
             firmwareData = replaceSection(firmwareData, hexString("02e0"), 0x14bc); // remove old signal strength meter
             // sbar size 2242 + 8 = 2250
             const dataSbar = hexString("10b5064c2378002b07d1054b002b02d0044800e000bf0123237010bda813002000000000c0000000044b10b5002b03d00349044800e000bf10bdc04600000000ac130020c00000000023c25c0133002afbd1581e704700207047d308db015918e0239b00994207d807231a40063b93404068425c134343547047406840187047002070470a00303a0300d0b2092805d900202d2901d15868463070470720424358688018f9e708207047072070470020704770477047e02210b500214068920000f095fb10bd10b5d523984710bd0000f8b5c36804005a1cc260c72a4cd9294b002519780123ff3948424841217c9943014304202174244909688b432349db000978890001400b43217c083081430b432374530709d123681868a84205d02100036808315b68984705006668002e1bd0e368db0718d4164b9847217ec7b28f420ad063695868ff2917d1002803d0390003689b68984727762100336830001b68083198470543edb2ab0701d5094b9847eb0701d5084b9847f8bd0028ebd00368db68e7e735080020001006401e0a0020b9b0000039b60000b1b60000f7b5040004265f20144fb8470190a068002809d0237b628a023b9a4204da801801a9022200f00cfb638a013e02339bb2f6b26382002ee6d1257bab420dd30b202674b84702002068002806d06368002b03d0d2062900d20f9847f7bd61a9000070b51a4c2378002b05d100f0b5fa00f0c3fa01232370164b1b68db071fd5154d2b7c012b1bd13f20134ca047c021030089010b408b4203d00143104b3f2098470c20a047c3070ad502200c4b002198470220a047c30402d52800fff7a1ff0848fff738ff074b984770bdc0462414002000100640e813002061a9000001af0000cc13002099c30000f8b5040040680d0000281fd003685b68984707002068218903689b6898470600606829000368db6898470200002e05d039003000002f0bd000f08efa606829000368db68984723891b1823810020f8bd00f08bfaf2e770b506000d0000242800fff7b0fe844206d2295d30000134fff7c7ffe4b2f3e770bdf0b50c00002187b017000190072204a81e00039100f06dfa002c04da2d210198fff7b2ff6442194b0093002319000822d21a974219dc009a126a94460022a44503dc60460132241af9e7302084469444654603a8c554002a02d0002900d11900009a0133043a0092e1e703ab002901d130221a70002e02d00921c91b891b01985918fff7acff07b0f0bdc04664ed0000f0b50c0087b00da909781600e3180caa0500127805910193802b01dd802301936b461b790393b3180293382b01dd382302936b4637001b7a0493049b9f4210d228683a00036821005b689847039b2868591e03683a005b68c9b201379847ffb2ebe72700039b9f4210d228683900036832005b689847049b28685a1e036839005b68d2b201379847ffb2ebe7059b002b13d0019b0134e4b2013b9c420dda771c029bffb2013b9f42f3da28683a00036821005b6898470137f2e707b0f0bd0000f0b50b7a04000d0087b01b0700d511e10b681b68002b06d0874b01201b78002b34d007b0f0bd83685a1c82605b07f3d0824b834e1a6801235209934343740c20b047b4467f49830702d4627c002a01d000220a700a787c480a2a06d82f7a01263b003340029337423ed00178002900d0e0e00124754b04708022186800f091f92b7a234200d0d5e00220cae7704b01201b78002bc5d16f4b1d88fa239b009d4200d96d4d142200216c4800f07af94d236b4c02222900200023814c3bfff7f8fe02226021674800f06cf958230022290020002381563bfff7ebfe05226249634800f056f901209ce7029b01320a700370627c002a5ed06f20e0473f220d2382435343a2819b11514fa37380220021386800f047f90c23e65ec023554d5b002b81002e03dd20212800fff786fe0323002231002800fff7bcfe637c002b53d03e680f2230004b49233000f022f93300343621331a78d2431a700133b342f9d1a37b1c1c0d2b00d90d24e4b2029b9c428bd06b46029a1b7a062a00d90623052102980133dbb2009300271f2341430820009a029e9a1a3b00b0427f41403104332800d2b2c9b20197fff7cbfe029b0133dbb20293dae76720e0474008c0b20200a023a03a181a2c49029b12b20d780133dbb2a84203da01310d2bf7d1013391b2090a227361738fe7a37b05ae032230002349039300f0cdf83868039b08222330092b0fd91f4900f0c4f830237370039b27333370ac23ff33310028002b81fff737fe9de7184900f0b4f8039b3033337020237370eee70020f4e6ea0600200010064061a90000a5130020a413002020140020e306002006040020e7030000d106002098130020d9060020aed40000eb0600208c13002062d4000054ed00001eed00009dd30000b5d30000164b1749174a19605a60174b174a18481a60184a5a60184a506011600022174917484a600a600a744a821649083008608a600a8214494b6014494b60144b15495a601960da60191d1a74ff3299605b611a76114b114a1a607047c046c41300202ced0000040700201814002044ed00008406002020d6000010140020e81300208ced0000fc1300208c13002098130020cc13002088ed00002014002084080020044b054a0548834202d202ca02c3fae77047c0468c130020c8ed0000a613002070b500260c4d0d4c641ba410a64209d1002600f06df80a4d0a4c641ba410a64205d170bdb300eb5898470136eee7b300eb5898470136f2e7bced0000bced0000bced0000c4ed0000002310b59a4200d110bdcc5cc4540133f8e703008218934200d1704719700133f9e7202000000000000000000000000077e500007be500009be50000d7e500000000000000000000a1e50000a5e50000c7e50000cbe500008d87817b756f69635d53493f35000000010000000a00000064000000e803000010270000a086010040420f008096980000e1f505fc1300200000000000000000cfe500006de90000d3e50000d5e50000f8b5c046f8bc08bc9e467047f8b5c046f8bc08bc9e46704749e50000f5eb000021e50000c4130020000000000000000010140020000000000000000001ff");
-            // graph size 1416 + 8 = 1424
-           // const dataGraph = hexString("10b5064c2378002b07d1054b002b02d0044800e000bf0123237010bd9413002000000000c0000000044b10b5002b03d00349044800e000bf10bdc0460000000098130020c00000000023c25c0133002afbd1581e70470000002243088b4274d303098b425fd3030a8b4244d3030b8b4228d3030c8b420dd3ff22090212ba030c8b4202d31212090265d0030b8b4219d300e0090ac30b8b4201d3cb03c01a5241830b8b4201d38b03c01a5241430b8b4201d34b03c01a5241030b8b4201d30b03c01a5241c30a8b4201d3cb02c01a5241830a8b4201d38b02c01a5241430a8b4201d34b02c01a5241030a8b4201d30b02c01a5241cdd2c3098b4201d3cb01c01a524183098b4201d38b01c01a524143098b4201d34b01c01a524103098b4201d30b01c01a5241c3088b4201d3cb00c01a524183088b4201d38b00c01a524143088b4201d34b00c01a5241411a00d20146524110467047ffe701b5002000f006f802bdc0460029f7d076e770477047c04600207047d308db015918e0239b00994207d807231a40063b93404068425c134343547047406840187047002070470a00303a0300d0b2092805d900202d2901d15868463070470720424358688018f9e70820704707207047e02210b500214068920000f064f910bd10b5d523984710bdf8b5040040680d0000281fd003685b68984707002068218903689b6898470600606829000368db6898470200002e05d039003000002f0bd000f038f9606829000368db68984723891b1823810020f8bd00f035f9f2e70000f0b5594b8bb003934b680025069303ab07936b469d84554b0c68554a1b6805af0600049405920895db0729d50c20736998475049830700d50d700b784e4a142b04d83220ff30205cff281bd11578002d16d1012304981370813080222900ff3000f001f960222900444800f0fcf8444b1d703223ff33e35cff2b01d0b36998470bb0f0bd01330b70002313706a468133ff3301ad93843b4905222800089700f0d9f86720736998474008c0b20028e7d0a02826d920236030c4b22b7064212000fff7aefe30300a2168702000fff7a8fe0a21c0b2fff72aff3031a97020000a21fff724ff00273031e9702800fff790fe87420cd2e95d07a80137fff755ffffb2f3e760246442241a2d23e4b2d5e71c4f3b78203b5f2b01d920233b7007235c431c413d781549221c4819e4b220389c4200d91a1cd2b29a1aff231341db4303707b2d08d800232a0018001f3a8a18d0540133042bfbd104986022a130ff30013500f078f83d7089e7dce9000000100640f4e900008c1300208d130020b013002010140020cee9000010b50e4c2378002b05d100f02bf800f039f8012323700a4b19684a1c1a60094b4b4309498b4205d8c82a03d907490848fff722ff074b984710bdc0461c14002090130020efeeeeee1111111104ea00001cea000099c30000014b5a1c5a60704714140020044b054a0548834202d202ca02c3fae77047c0468c130020a0ea00009413002070b500260c4d0d4c641ba410a64209d1002600f081f80a4d0a4c641ba410a64205d170bdb300eb5898470136eee7b300eb5898470136f2e794ea000094ea000094ea00009cea0000002310b59a4200d110bdcc5cc4540133f8e703008218934200d1704719700133f9e7673030300000000000000000000091e6000095e60000b5e60000e9e600000000000000000000bbe60000bfe60000e1e60000e5e600000407002020d6000048d30000b303002084060020060400204d870000edd0000001d1000045be000001af000061a9000039b60000b9b00000e9c600000d8700004d8600007da6000019a50000cda7000029010000bdaa0000d5aa0000d91c00003da6000095a70000b1b60000119c0000d500000099c30000f8b5c046f8bc08bc9e467047f8b5c046f8bc08bc9e46704749e5000039e9000021e50000ff01000001000000");
-           // if (this.selectSbar.checked) {
-                firmwareData = replaceSection(firmwareData, dataSbar, firmwareData.length);
+            firmwareData = replaceSection(firmwareData, dataSbar, firmwareData.length);
                 log(`Success: ${this.name} S-Meter applied.`);
-            //}
-           // else if (this.selectGraph.checked) {
-          //    firmwareData = replaceSection(firmwareData, dataGraph, firmwareData.length);
-          //    log(`Success: ${this.name} Graph applied.`);
-         //   }
+            
             return firmwareData;
         }
     }
