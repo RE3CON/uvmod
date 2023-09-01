@@ -601,7 +601,7 @@ class Mod_5tonetest extends FirmwareMod {
             customModeDiv.appendChild(explanation);
 
             this.band1L = addInputField(customModeDiv, "Band 1 Lower Limit (Hz)", "50000000");
-            this.band1U = addInputField(customModeDiv, "Band 1 Upper Limit (Hz)", "76000000");
+            this.band1U = addInputField(customModeDiv, "Band 1 Upper Limit (Hz)", "107999990");
             this.band2L = addInputField(customModeDiv, "Band 2 Lower Limit (Hz)", "108000000");
             this.band2U = addInputField(customModeDiv, "Band 2 Upper Limit (Hz)", "135999900");
             this.band3L = addInputField(customModeDiv, "Band 3 Lower Limit (Hz)", "136000000");
@@ -613,7 +613,7 @@ class Mod_5tonetest extends FirmwareMod {
             this.band6L = addInputField(customModeDiv, "Band 6 Lower Limit (Hz)", "400000000");
             this.band6U = addInputField(customModeDiv, "Band 6 Upper Limit (Hz)", "469999900");
             this.band7L = addInputField(customModeDiv, "Band 7 Lower Limit (Hz)", "470000000");
-            this.band7U = addInputField(customModeDiv, "Band 7 Upper Limit (Hz)", "600000000");
+            this.band7U = addInputField(customModeDiv, "Band 7 Upper Limit (Hz)", "1300000000");
 
             this.modSpecificDiv.appendChild(customModeDiv);
 
