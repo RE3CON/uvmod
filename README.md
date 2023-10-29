@@ -45,7 +45,7 @@ This project was created for research and amateur radio use only, we are not res
 The firmware produced with this website is released WITHOUT ANY WARRANTY: Anyone flashing a modified binary image obtained from the sources made available through this repository and website configurator does so at their own risk. We always test all the code on our devices before publishing it on the repository, however we cannot guarantee the absolute absence of bugs nor of potential side effects. Mods flagged with Experimental are not fully tested.
 
 ## Credits, rules and trouble, whats all about...
-"I'll take in account an EU Country block on a new DNS domain cause of different law regulations in whosmatt location. Threaten me with reference to DMCA is a taboo that's absolutely frowned upon among open source coding communities. A No-Go by doing shared code works. However he's desided later to implement my TX unlock code and add TX related features afterwards." Thats great to push the initial uvmod further with TX features since that.
+"Threaten me with reference to DMCA is a taboo that's absolutely frowned upon among open source coding communities. A No-Go by doing shared code works. However he's desided later to implement my TX unlock code and add TX related features afterwards." Thats great to push the initial uvmod further with TX features since that."
 
 ## About warnings...
 However warnings about TX freq related features have been together with the FIRST UVMOD equipped with a TX Mod released by me and clearly to understand warnings written to the function description at the same time as published. This was a while <i>before</i> whosmatt's first time implemented my and any TX mod/patch. See the code time line changes around August, 3th 2023. 
