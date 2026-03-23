@@ -1,4 +1,4 @@
-# [CLICK HERE TO OPEN UVMOD RX-TX](http://uvmod.ddns.net/) *feature work in development* WIP
+# [CLICK HERE TO OPEN UVMOD RX-TX](https://re3con.github.io/uvmod/) *feature work in development* WIP
 ## [中文版 Open Chinese Version (maintained independently)](https://uvmod.xanyi.eu.org/)
 # [UVMOD in Russian Language Version](https://uvmod.valek.net.ru/) by [Valek rus](https://github.com/valekrus/uvmod-russian)
 # [UVMOD in Portugese by Matoz @spm81](https://meshtastic.pt/QuanSheng/)
